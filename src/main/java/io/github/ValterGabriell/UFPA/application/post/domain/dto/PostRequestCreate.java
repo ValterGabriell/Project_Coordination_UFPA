@@ -13,6 +13,13 @@ public class PostRequestCreate {
         return link;
     }
 
+    public PostRequestCreate(String body, String title, String imgRef, String link) {
+        this.body = body;
+        this.title = title;
+        this.imgRef = imgRef;
+        this.link = link;
+    }
+
     public void setLink(String link) {
         this.link = link;
     }
