@@ -2,9 +2,7 @@ package io.github.ValterGabriell.UFPA.application.post;
 
 import io.github.ValterGabriell.UFPA.application.exceptions.ApiExceptions;
 import io.github.ValterGabriell.UFPA.application.post.domain.Post;
-import io.github.ValterGabriell.UFPA.application.post.domain.dto.CustomResponse;
-import io.github.ValterGabriell.UFPA.application.post.domain.dto.PostRequestCreate;
-import io.github.ValterGabriell.UFPA.application.post.domain.dto.PostResponse;
+import io.github.ValterGabriell.UFPA.application.post.domain.dto.*;
 import io.github.ValterGabriell.UFPA.infra.api.ImgurAPI;
 import io.github.ValterGabriell.UFPA.infra.api.dto.ResponseImageDTO;
 import io.github.ValterGabriell.UFPA.infra.repository.PostRepository;
@@ -30,10 +28,10 @@ public class PostService {
     private final ImgurAPI imgurAPI;
 
 
-    public CustomResponse<PostResponse> createPost(String body, String title, String link, MultipartFile image, String token) throws ApiExceptions, IOException, InterruptedException, ExecutionException {
+    public CustomResponse<PostResponse> createPost(String body, String title, String link, MultipartFile image, String token) throws InterruptedException, ExecutionException {
         CompletableFuture<String> imgurAPICallFuture = CompletableFuture.supplyAsync(() -> {
             try {
-                return imgurAPI.sendImageToImgur(title, image, token);
+                return imgurAPI.sendImageToImgurAndReturnLinkForAccessIt(title, image, token);
             } catch (IOException e) {
                 return e.getMessage();
             }
@@ -100,5 +98,70 @@ public class PostService {
         return customResponse;
     }
 
+    public CustomResponse<String> updateTitle(UpdateTitle updateTitle, String postId) throws ApiExceptions {
+        Optional<Post> postOptional = postRepository.findById(postId);
+        CustomResponse<String> customResponse = new CustomResponse<>();
+        if (postOptional.isPresent()) {
+            Post post = postOptional.get();
+            post.setTitle(updateTitle.getTitle());
+            postRepository.save(post);
+
+            String headerLocation = ServletUriComponentsBuilder.fromCurrentRequest().query("postId=" + postId).build().toUriString();
+            customResponse.setSuccessful(true);
+            customResponse.setData("Título atualizado com sucesso!");
+            customResponse.setMessage(headerLocation);
+
+            return customResponse;
+        } else {
+            throw new ApiExceptions("Post com id " + postId + " não foi encontrado!");
+        }
+    }
+
+    public CustomResponse<String> updateBody(UpdateBody updateBody, String postId) throws ApiExceptions {
+        Optional<Post> postOptional = postRepository.findById(postId);
+        CustomResponse<String> customResponse = new CustomResponse<>();
+        if (postOptional.isPresent()) {
+            Post post = postOptional.get();
+            post.setBody(updateBody.getBody());
+            postRepository.save(post);
+
+            String headerLocation = ServletUriComponentsBuilder.fromCurrentRequest().query("postId=" + postId).build().toUriString();
+            customResponse.setSuccessful(true);
+            customResponse.setData("Descrição atualizada com sucesso!");
+            customResponse.setMessage(headerLocation);
+
+            return customResponse;
+        } else {
+            throw new ApiExceptions("Post com id " + postId + " não foi encontrado!");
+        }
+    }
+
+    public CustomResponse<String> updateLink(UpdateLink updateLink, String postId) throws ApiExceptions {
+        Optional<Post> postOptional = postRepository.findById(postId);
+        CustomResponse<String> customResponse = new CustomResponse<>();
+        if (postOptional.isPresent()) {
+            Post post = postOptional.get();
+            post.setLink(updateLink.getLink());
+            postRepository.save(post);
+
+            String headerLocation = ServletUriComponentsBuilder.fromCurrentRequest().query("postId=" + postId).build().toUriString();
+            customResponse.setSuccessful(true);
+            customResponse.setData("Link atualizado com sucesso!");
+            customResponse.setMessage(headerLocation);
+
+            return customResponse;
+        } else {
+            throw new ApiExceptions("Post com id " + postId + " não foi encontrado!");
+        }
+    }
+
+    public void deletePostById(String postId) throws ApiExceptions {
+        Optional<Post> postOptional = postRepository.findById(postId);
+        if (postOptional.isPresent()) {
+            postRepository.delete(postOptional.get());
+        } else {
+            throw new ApiExceptions("Post com id " + postId + " não foi encontrado!");
+        }
+    }
 
 }

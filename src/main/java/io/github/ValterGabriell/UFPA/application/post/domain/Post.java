@@ -40,7 +40,7 @@ public class Post {
     }
 
     public PostResponse toPostResponse() {
-        return new PostResponse(this.postId, this.body, this.title, this.postedAt, this.imgRef);
+        return new PostResponse(this.postId, this.body, this.title, this.postedAt, this.link, this.imgRef);
     }
 
     public String getPostId() {
@@ -81,5 +81,13 @@ public class Post {
 
     public void setImgRef(String imgRef) {
         this.imgRef = imgRef;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 }

@@ -8,17 +8,29 @@ public class PostResponse {
     private String body;
     private String title;
     private LocalDate postedAt;
+    private String link;
+
     private String imgRef;
 
-    public PostResponse(String postId, String body, String title, LocalDate postedAt, String imgRef) {
+
+    public PostResponse(String postId, String body, String title, LocalDate postedAt, String link, String imgRef) {
         this.postId = postId;
         this.body = body;
         this.title = title;
         this.postedAt = postedAt;
+        this.link = link;
         this.imgRef = imgRef;
     }
 
     public PostResponse() {
+    }
+
+    public String getImgRef() {
+        return imgRef;
+    }
+
+    public void setImgRef(String imgRef) {
+        this.imgRef = imgRef;
     }
 
     public String getPostId() {
@@ -53,11 +65,11 @@ public class PostResponse {
         this.postedAt = postedAt;
     }
 
-    public String getImgRef() {
-        return imgRef;
+    public String getLink() {
+        return link;
     }
 
-    public void setImgRef(String imgRef) {
-        this.imgRef = imgRef;
+    public void setLink(String link) {
+        this.link = link;
     }
 }

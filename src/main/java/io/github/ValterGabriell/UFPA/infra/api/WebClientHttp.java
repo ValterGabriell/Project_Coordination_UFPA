@@ -16,5 +16,5 @@ public abstract class WebClientHttp {
 
     abstract ResponseImageDTO getImage(String hashImage, String token) throws ApiExceptions;
 
-    abstract String sendImageToImgur(String title, MultipartFile image, String token) throws IOException;
+    abstract String sendImageToImgurAndReturnLinkForAccessIt(String title, MultipartFile image, String token) throws IOException;
 }

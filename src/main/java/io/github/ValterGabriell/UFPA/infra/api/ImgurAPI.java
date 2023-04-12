@@ -30,7 +30,7 @@ public class ImgurAPI extends WebClientHttp {
     }
 
     @Override
-    public synchronized String sendImageToImgur(String title, MultipartFile image, String token) throws IOException {
+    public synchronized String sendImageToImgurAndReturnLinkForAccessIt(String title, MultipartFile image, String token) throws IOException {
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("image", new ByteArrayResource(image.getBytes()) {
             @Override

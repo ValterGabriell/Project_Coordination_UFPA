@@ -1,8 +1,7 @@
 package io.github.ValterGabriell.UFPA.application.post;
 
 import io.github.ValterGabriell.UFPA.application.exceptions.ApiExceptions;
-import io.github.ValterGabriell.UFPA.application.post.domain.dto.CustomResponse;
-import io.github.ValterGabriell.UFPA.application.post.domain.dto.PostResponse;
+import io.github.ValterGabriell.UFPA.application.post.domain.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -37,5 +36,27 @@ public class PostController {
         return new ResponseEntity<>(imageByHashImage, HttpStatus.OK);
     }
 
+    @PutMapping(value = "update-title", params = {"postId"})
+    public ResponseEntity<CustomResponse<String>> updatePostTitle(@RequestBody UpdateTitle updateTitle, @RequestParam String postId) throws ApiExceptions {
+        CustomResponse<String> postWithTitleUpdated = postService.updateTitle(updateTitle, postId);
+        return new ResponseEntity<>(postWithTitleUpdated, HttpStatus.OK);
+    }
 
+    @PutMapping(value = "update-body", params = {"postId"})
+    public ResponseEntity<CustomResponse<String>> updatePostBody(@RequestBody UpdateBody updateBody, @RequestParam String postId) throws ApiExceptions {
+        CustomResponse<String> postWithTitleUpdated = postService.updateBody(updateBody, postId);
+        return new ResponseEntity<>(postWithTitleUpdated, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "update-link", params = {"postId"})
+    public ResponseEntity<CustomResponse<String>> updatePostLink(@RequestBody UpdateLink updateLink, @RequestParam String postId) throws ApiExceptions {
+        CustomResponse<String> postWithTitleUpdated = postService.updateLink(updateLink, postId);
+        return new ResponseEntity<>(postWithTitleUpdated, HttpStatus.OK);
+    }
+
+    @DeleteMapping(params = {"postId"})
+    public ResponseEntity deletePostById(@RequestParam String postId) throws ApiExceptions {
+        postService.deletePostById(postId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
