@@ -1,8 +1,8 @@
 package io.github.ValterGabriell.UFPA.application.post.domain;
 
 
+import io.github.ValterGabriell.UFPA.application.post.domain.dto.PostResponse;
 import jakarta.persistence.*;
-import lombok.Cleanup;
 
 import java.time.LocalDate;
 
@@ -29,13 +29,6 @@ public class Post {
     private String link;
 
 
-    public Post(String body, String title, LocalDate postedAt, String imgRef) {
-        this.body = body;
-        this.title = title;
-        this.postedAt = postedAt;
-        this.imgRef = imgRef;
-    }
-
     public Post() {
     }
 
@@ -44,6 +37,10 @@ public class Post {
         this.title = title;
         this.imgRef = imgRef;
         this.link = link;
+    }
+
+    public PostResponse toPostResponse() {
+        return new PostResponse(this.postId, this.body, this.title, this.postedAt, this.imgRef);
     }
 
     public String getPostId() {

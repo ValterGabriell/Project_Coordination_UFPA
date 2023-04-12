@@ -1,20 +1,20 @@
 package io.github.ValterGabriell.UFPA.infra.api;
 
+import io.github.ValterGabriell.UFPA.application.exceptions.ApiExceptions;
 import io.github.ValterGabriell.UFPA.infra.api.dto.ResponseImageDTO;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 
 import java.io.IOException;
 
 public abstract class WebClientHttp {
+    public final String BASE_URL = "https://api.imgur.com/3/";
 
-    public WebClient getWebClientInstance() {
-        String BASE_URL = "https://api.imgur.com/3/";
-        return WebClient.create(BASE_URL);
+    public RestTemplate getRestTemplateInstance() {
+        return new RestTemplate();
     }
 
-    abstract Mono<ResponseImageDTO> getImage(String hashImage, String token);
+    abstract ResponseImageDTO getImage(String hashImage, String token) throws ApiExceptions;
 
     abstract String sendImageToImgur(String title, MultipartFile image, String token) throws IOException;
 }

@@ -1,9 +1,11 @@
 package io.github.ValterGabriell.UFPA.infra.api.dto;
 
-public class ResponseImageDTO {
-    public Image data;
-    public boolean success;
-    public int status;
+import java.io.Serializable;
+
+public class ResponseImageDTO implements Serializable {
+    private Image data;
+    private boolean success;
+    private int status;
 
     public Image getData() {
         return data;

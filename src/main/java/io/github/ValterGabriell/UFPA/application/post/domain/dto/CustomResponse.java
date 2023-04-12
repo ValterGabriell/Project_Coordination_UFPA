@@ -1,17 +1,17 @@
 package io.github.ValterGabriell.UFPA.application.post.domain.dto;
 
 public class CustomResponse<T> {
-    private T object;
+    private T data;
     private String message;
     private boolean successful;
 
 
-    public T getObject() {
-        return object;
+    public T getData() {
+        return data;
     }
 
-    public void setObject(T object) {
-        this.object = object;
+    public void setData(T data) {
+        this.data = data;
     }
 
     public String getMessage() {

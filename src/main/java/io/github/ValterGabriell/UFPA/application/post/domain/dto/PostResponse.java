@@ -4,10 +4,30 @@ import java.time.LocalDate;
 
 public class PostResponse {
 
+    private String postId;
     private String body;
     private String title;
     private LocalDate postedAt;
     private String imgRef;
+
+    public PostResponse(String postId, String body, String title, LocalDate postedAt, String imgRef) {
+        this.postId = postId;
+        this.body = body;
+        this.title = title;
+        this.postedAt = postedAt;
+        this.imgRef = imgRef;
+    }
+
+    public PostResponse() {
+    }
+
+    public String getPostId() {
+        return postId;
+    }
+
+    public void setPostId(String postId) {
+        this.postId = postId;
+    }
 
     public String getBody() {
         return body;

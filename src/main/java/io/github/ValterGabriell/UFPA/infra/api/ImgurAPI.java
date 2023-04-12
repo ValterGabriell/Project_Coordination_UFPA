@@ -1,17 +1,13 @@
 package io.github.ValterGabriell.UFPA.infra.api;
 
+import io.github.ValterGabriell.UFPA.application.exceptions.ApiExceptions;
 import io.github.ValterGabriell.UFPA.infra.api.dto.ResponseImageDTO;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
-import reactor.core.publisher.Mono;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -21,12 +17,16 @@ public class ImgurAPI extends WebClientHttp {
 
 
     @Override
-    public Mono<ResponseImageDTO> getImage(String hashImage, String token) {
-        return getWebClientInstance()
-                .get()
-                .uri("image/{hashImage}", hashImage)
-                .header("Authorization", "Bearer " + token)
-                .retrieve().bodyToMono(ResponseImageDTO.class);
+    public ResponseImageDTO getImage(String hashImage, String token) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.set("Authorization", "Bearer " + token);
+
+        HttpEntity<Object> requestEntity = new HttpEntity<>(httpHeaders);
+
+        ResponseEntity<ResponseImageDTO> response = getRestTemplateInstance()
+                .exchange(BASE_URL + "image/" + hashImage, HttpMethod.GET, requestEntity, ResponseImageDTO.class);
+
+        return response.getBody();
     }
 
     @Override
@@ -46,8 +46,8 @@ public class ImgurAPI extends WebClientHttp {
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<ResponseImageDTO> responseEntity = restTemplate.postForEntity("https://api.imgur.com/3/image", requestEntity, ResponseImageDTO.class);
+        ResponseEntity<ResponseImageDTO> responseEntity = getRestTemplateInstance()
+                .postForEntity(BASE_URL + "image", requestEntity, ResponseImageDTO.class);
 
         return Objects.requireNonNull(responseEntity.getBody()).getData().getLink();
     }
