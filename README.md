@@ -10,7 +10,7 @@
   
 <h1>Como usar</h1>
 
-<h2>Prerequisites</h2>
+<h2>Prerequisitos</h2>
 <p>Clone ou baixe o repositório e start ele através de sua IDE de preferência rodando o método main da classe principal na pasta raíz da aplicação</p>
 
 <h1>Endpoint</h1>
