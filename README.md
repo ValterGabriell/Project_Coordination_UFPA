@@ -3,9 +3,7 @@
 
 <!--ts-->
    * [Como usar](#como-usar)
-   * [Endpoint](#endpoints)
-   * [Users Endpoints](#users-endpoints)
-   * [Movies Endpoints](#movies-endpoints)
+   * [Endpoint](#endpoint)
    * [Credits](#credits)
 <!--te-->
 
@@ -15,7 +13,7 @@
 <h2>Prerequisites</h2>
 <p>Clone ou baixe o repositório e start ele através de sua IDE de preferência rodando o método main da classe principal na pasta raíz da aplicação</p>
 
-<h1>Endpoint's Flow</h1>
+<h1>Endpoint</h1>
 <h3>BASE URL</h3>
 
 ```bash
